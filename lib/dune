@@ -1,0 +1,11 @@
+
+(library
+
+ (name  mirage_codec)
+  (public_name mirage-codec)
+  (libraries mirage-flow-lwt cstruct)
+  (synopsis "parse protocol frames on mirage flows")
+
+
+ )
+
