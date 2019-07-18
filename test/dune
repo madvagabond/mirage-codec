@@ -1,0 +1,20 @@
+(executable
+ (name test)
+ (public_name test)
+ (libraries lwt mirage-codec alcotest-lwt  mirage-flow-unix)
+)
+
+
+
+(alias
+
+ 
+ (name runtest)
+
+
+ (action
+   (  run %{exe:test.exe}  )
+ )
+
+
+)

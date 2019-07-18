@@ -1,4 +1,6 @@
 
+
+
 module type Encoder = sig
 
   type output 
@@ -10,10 +12,6 @@ end
 
 
 type 'a decode_state = Partial | Done of ('a * Cstruct.t)
-type 'a out = ('a * Cstruct.t) option
-
-
-
 
 type ('a, 'b) decode_result =  ('a decode_state, 'b) result
 
@@ -29,19 +27,6 @@ end
 
 
 
-
-
-(*
-module type TRANSPORT = struct
-
-  type t
-  type message 
-
-  val frame: t -> result 
-  val read: 
-end
-
-*)
 
 
 
@@ -72,7 +57,6 @@ module type Transport = sig
     | Eof
 
 
-
   val read: t -> (or_eof, error) result Lwt.t
   val write: t -> output -> (unit, write_error) result Lwt.t
 
@@ -88,8 +72,9 @@ end
 
 
 
-module Make (F: Mirage_flow_lwt.S) (C: Codec): Transport = struct
+module Make (F: Mirage_flow_lwt.S) (C: Codec) = struct
 
+  
   open Lwt.Infix
 
 
@@ -121,6 +106,11 @@ module Make (F: Mirage_flow_lwt.S) (C: Codec): Transport = struct
 
 
 
+  let make flow =
+    let buffer = Cstruct.empty in
+    {flow;buffer}
+
+
   
   
   
@@ -140,7 +130,6 @@ module Make (F: Mirage_flow_lwt.S) (C: Codec): Transport = struct
 
     
     let rec aux () =
-
 
       let perform_read () =
         F.read t.flow >>= function
