@@ -8,11 +8,7 @@ module TestCodec = struct
   type input = string
   type output = string
 
-
-
-
   type error = unit
-
   
 
   let encode out =
